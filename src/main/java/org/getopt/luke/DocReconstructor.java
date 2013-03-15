@@ -65,10 +65,9 @@ public class DocReconstructor extends Observable {
     if (numTerms == -1) {
       Fields fields = MultiFields.getFields(reader);
       numTerms = 0;
-      FieldsEnum fe = fields.iterator();
-      String fld = null;
-      while ((fld = fe.next()) != null) {
-        Terms t = fe.terms();
+      Iterator<String> fe = fields.iterator();
+      while (fe.hasNext()) {
+        Terms t = fields.terms(fe.next());
         TermsEnum te = t.iterator(null);
         while (te.next() != null) {
           numTerms++;

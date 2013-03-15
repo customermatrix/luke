@@ -22,9 +22,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiFields;
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.TermsEnum;
-import org.apache.lucene.index.FieldsEnum;
 import org.apache.lucene.index.Terms;
-import org.apache.lucene.index.DocsEnum;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.PriorityQueue;
 import org.apache.lucene.util.BytesRef;
@@ -35,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * <b>NOTE: this is a temporary copy of contrib/misc from Lucene - 
@@ -140,11 +139,11 @@ public class HighFreqTerms {
         return EMPTY_STATS;
       }
       tiq = new TermStatsQueue(numTerms);
-      FieldsEnum fieldsEnum = fields.iterator();
+      Iterator<String> fieldsEnum = fields.iterator();
       while (true) {
-        String field = fieldsEnum.next();
-        if (field != null) {
-          Terms terms = fieldsEnum.terms();
+        if (fieldsEnum.hasNext()) {
+          String field = fieldsEnum.next();
+          Terms terms = fields.terms(field);
           te = terms.iterator(te);
           fillQueue(te, tiq, field);
         } else {
