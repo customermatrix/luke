@@ -89,7 +89,6 @@ import org.getopt.luke.decoders.DateDecoder;
 import org.getopt.luke.decoders.Decoder;
 import org.getopt.luke.decoders.NumIntDecoder;
 import org.getopt.luke.decoders.NumLongDecoder;
-import org.getopt.luke.decoders.SolrDecoder;
 import org.getopt.luke.decoders.StringDecoder;
 import org.getopt.luke.plugins.ScriptingPlugin;
 import org.getopt.luke.xmlQuery.XmlQueryParserFactory;
@@ -214,23 +213,9 @@ public class Luke extends Thinlet implements ClipboardOwner {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    initSolrTypes();
     loadPlugins();
   }
 
-  private void initSolrTypes() {
-    // add Solr field decoders
-    String[] solrTypes = SolrDecoder.getTypes();
-    Object cbDec =  find("cbDec");
-    Font f = getFont(cbDec, "font");
-    for (String s : solrTypes) {
-      Object choice = create("choice");
-      setFont(choice, f);
-      setString(choice, "name", s);
-      setString(choice, "text", s);
-      add(cbDec, choice);
-    }
-  }
   /**
    * Set color theme for the UI.
    * @param which one of the predefined themes. For custom themes use {@link Thinlet#setColors(int, int, int, int, int, int, int, int, int)}.
@@ -1074,7 +1059,6 @@ public class Luke extends Thinlet implements ClipboardOwner {
    */
   private void initOverview() {
     try {
-      initSolrTypes();
       courier = new Font("Courier", getFont().getStyle(), getFont().getSize());
       lastST = find("lastST");
       setBoolean(find("bReload"), "enabled", true);
@@ -5102,13 +5086,6 @@ public class Luke extends Thinlet implements ClipboardOwner {
       dec = new NumLongDecoder();
     } else if (decName.equals("ni")) {
       dec = new NumIntDecoder();
-    } else if (decName.startsWith("solr.")) {
-      try {
-        dec = new SolrDecoder(decName);
-      } catch (Exception e) {
-        e.printStackTrace();
-        errorMsg("Error setting decoder: " + e.toString());
-      }
     } else {
       dec = defDecoder;
     }
