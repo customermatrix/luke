@@ -10,3 +10,5 @@ mvn clean package
 cd target
 java -jar luke-4.2.0-SNAPSHOT.jar
 ```
+
+Obsolete
