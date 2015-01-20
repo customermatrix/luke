@@ -11,7 +11,7 @@ Usage 1: Launching with dependencies packaged in 'lib' folder
 mvn clean package
 cd target
 java -jar luke-4.2.0-SNAPSHOT.jar
-
+```
 
 Usage 2: Launching with dependencies embedded with single jar 
 
