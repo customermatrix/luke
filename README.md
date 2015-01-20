@@ -1,7 +1,7 @@
 luke
 ====
 
-Luke for PES Lucene
+Luke for PES Lucene, merged from https://github.com/DmitryKey/luke
 
 Usage 1: Launching with dependencies packaged in 'lib' folder 
 
@@ -17,6 +17,8 @@ Usage 2: Launching with dependencies embedded with single jar
 mvn clean package
 cd target
 unzip luke-with-deps.jar
+```bash
+
 Edit 3 following files by adding codecs missing:
 - luke-with-deps.jar\META-INF\services\org.apache.lucene.codecs.Codec
 ...
